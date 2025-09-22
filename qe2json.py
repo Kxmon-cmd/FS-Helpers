@@ -23,6 +23,10 @@ def qe_out(filename, outname):
     Forces = []
     Lattice = []
 
+    LenConv = 0.529177 #Converting from bohr to Angstrom
+    EnConv = 13.6057039763 #Conversion from rydberg to eV
+    FConv = 25.7110542481 #Conversion Ry/au to eV/Angstrom
+
     Forces_ = []
     Positions_ = []
     m=0
@@ -39,7 +43,7 @@ def qe_out(filename, outname):
             iterations = int(line[40:50])
 
         if "lattice parameter (alat)" in line:
-            latpar = float(line[39:47].strip())*0.52917721090  #converting from bohr to angstom                        
+            latpar = float(line[39:47].strip())*LenConv  #converting from bohr to angstom                        
 
         #reading amount of Atoms in the cell 
         if "     number of atoms/cell" in line:                     
@@ -56,11 +60,11 @@ def qe_out(filename, outname):
 
         #reading energies for every configuration and saving into an array 
         if "!    total energy" in line:                             
-            Energy.append(float(line[35:50].strip())*13.6057039763)     #also converting rydberg to eV
+            Energy.append(float(line[35:50].strip())*EnConv)     #also converting rydberg to eV
         
         #reading forces for every atom
         if "1   force" in line:                                     
-            f = [float(line[35:50].strip())*25.7110542481, float(line[50:63].strip())*25.7110542481, float(line[63:75].strip())*25.7110542481] #Converting Ry/au to eV/Angstrom
+            f = [float(line[35:50].strip())*FConv, float(line[50:63].strip())*FConv, float(line[63:75].strip())*FConv] #Converting Ry/au to eV/Angstrom
             Forces_.append(f)
 
         #reading positions of atoms
@@ -77,8 +81,6 @@ def qe_out(filename, outname):
                     Pos = [float(line[15:30].strip())*latpar, float(line[30:50].strip())*latpar, float(line[50:70].strip())*latpar]    #Converting from au to angstrom
                     Positions_.append(Pos)
     
-    np.savetxt("Energy.txt",Energy[i],delimiter=',')
-
     #Extracting the Forces and Positions for one iteration
     for n in range(0,iterations):
         for j in range(0+n*NumAtoms[0], NumAtoms[0]+n*NumAtoms[0]):
@@ -107,7 +109,7 @@ def qe_out(filename, outname):
             }
         
         #creating a jeson file for the n-th iteration
-        with open(str(n+4000)+outname, "w") as f:                     
+        with open(str(n)+outname, "w") as f:                     
             json.dump(data, f, indent=2)
 
         #resetting the forces and positions
