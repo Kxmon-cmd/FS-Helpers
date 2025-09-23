@@ -11,7 +11,7 @@ The tools focus on converting MD outputs into FitSNAP-compatible formats and vis
 
 ## Usage
 
-- **qe2json.py (qe2xyz.py)**:
+- **qe2json.py**:
   
        python qe2json.py -i qe.out -o outname.json
 - **qe2xyz.py**:
