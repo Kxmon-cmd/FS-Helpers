@@ -41,8 +41,15 @@ def main():
     plt.scatter(dfe_Training['preds'],dfe_Training['truths'], c="gold", s=4, alpha=1)
     plt.scatter(dfe_Test['preds'],dfe_Test['truths'], c="cadetblue", s=4, alpha=1)
     plt.plot(x,y, c="teal")
-    plt.xlabel(r"$E_{ML} (eV)$")
-    plt.ylabel(r"$E_{ref} (eV)$")
+
+    if args.energy:
+        plt.xlabel(r"$E_{ML} (eV)$")
+        plt.ylabel(r"$E_{ref} (eV)$")
+    
+    if args.force:
+        plt.xlabel(r"$F_{ML} (eV/Å)$")
+        plt.ylabel(r"$F_{ref} (eV/Å)$")
+        
     plt.show()
 
 if __name__ == "__main__":
