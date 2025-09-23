@@ -1,5 +1,27 @@
 # FS-Helpers
 
-This repository includes some helpful Python code for compatibility of Quantum ESPRESSO with FitSNAP as well as some code for visualising results. Included are two programs for converting MD output to XYZ or JSON files, making it possible to use as input for FitSNAP. Another program can be used to plot predicted energies/forces against the reference energies/forces provided a FITSNAP.df dataframe. The 2bterm.py can be used to visualise the two-body term of an ACE potential.
+This repository contains helpful Python scripts for working with [Quantum ESPRESSO](https://www.quantum-espresso.org/) and [FitSNAP](https://fitsnap.github.io/).  
+The tools focus on converting MD outputs into FitSNAP-compatible formats and visualising results.
 
-Note that for PlotParity.py, a FitSNAP installation is required.
+## Features
+- **qe2json.py**: Convert MD output files into json format.
+- **qe2xyz.py**: Convert MD output into xyz format.
+- **PlotParity.py**: Plot predicted energies/forces vs. reference data from a `FITSNAP.df` dataframe.  
+- **2bterm.py**: Visualise the two-body term of an ACE potential.    
+
+## Usage
+
+- **qe2json.py (qe2xyz.py)**:
+  
+       python qe2json.py -i qe.out -o outname.json
+- **qe2xyz.py**:
+
+      python qe2xyz.py -i qe.out -o outname.xyz
+- **PlotParity.py**:
+  
+      python PlotParity.py -i FitSNAP.df -e
+      python PlotParity.py -i FitSNAP.df -f
+- **2bterm.py**:
+
+      python 2bterm.py -i ACE_pot.yace
+
