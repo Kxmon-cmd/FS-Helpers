@@ -97,10 +97,10 @@ def main():
     V_vals = [V_r(r, rcut, dcut, coeffs, rcut_in, dcut_in, lam)/4 for r in r_vals]
 
     plt.figure(figsize=(8, 5))
-    plt.plot(r_vals, V_vals, label="Zweikörperpotential V(r)")
+    plt.plot(r_vals, V_vals, label="Two-body term V(r)")
     plt.xlabel("r [Å]")
     plt.ylabel("V(r) [eV]")
-    plt.title("ACE 2-Körperpotential (ChebExpCos)")
+    plt.title("ACE two-body term (ChebExpCos)")
     plt.grid(True)
     plt.legend()
     plt.tight_layout()
