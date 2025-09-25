@@ -1,6 +1,8 @@
 import numpy as np
 from numpy.polynomial.chebyshev import Chebyshev
 
+#todo: add the other basis functions 
+
 def ChebExpCos(n, r, rcut, rcut_in, dcut_in, lam):
 
     #Calculates the chebyshev basis functions
