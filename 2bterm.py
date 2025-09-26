@@ -5,6 +5,8 @@ import argparse
 from bin.cutoff import inner, cutoff, env
 from bin.basis import ChebExpCos
 
+#Todo: add other basis functions
+
 def V_r(r, rcut, dcut, coeffs, rcut_in, dcut_in, lam):
     #calculates the potential function
 
