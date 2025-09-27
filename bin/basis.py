@@ -18,8 +18,9 @@ def ChebExpCos(coeffs, r, rcut, rcut_in, dcut_in, lam):
 
     #set argument
     x =  1 - (2 * ((np.exp(-lam * (r / rcut)) - np.exp(-lam)) / (1 - np.exp(-lam))))
-    for n, c in enumerate(coeffs):
-        gr.append(c[1]*Cheb(n, x))
+    for z, c in enumerate(coeffs):
+        #c[1] = coeff, c[0] = n
+        gr.append(c[1]*Cheb(c[0], x))
 
     return gr
 
@@ -27,8 +28,8 @@ def ChebPow(coeffs, r, lam, rcut):
     gr = []
 
     x = 2 * (1 - (1 - r/rcut)**lam) - 1
-    for n, c in enumerate(coeffs):
-        gr.append(c[1]*Cheb(n, x))
+    for z, c in enumerate(coeffs):
+        gr.append(c[1]*Cheb(c[0], x))
 
     return gr
 
@@ -36,7 +37,7 @@ def ChebLinear(coeffs, r, lam, rcut):
     gr = []
 
     x = (1 - r/rcut)
-    for n, c in enumerate(coeffs):
-        gr.append(c[1]*Cheb(n, x))
+    for z, c in enumerate(coeffs):
+        gr.append(c[1]*Cheb(c[0], x))
 
     return gr
