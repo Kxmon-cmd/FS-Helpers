@@ -2,36 +2,41 @@ import numpy as np
 from numpy.polynomial.chebyshev import Chebyshev
 
 #todo: add support for SBessel
-def ChebExpCos(n, r, rcut, rcut_in, dcut_in, lam):
 
-    #Calculates the chebyshev basis functions
-    x =  1 - (2 * ((np.exp(-lam * (r / rcut)) - np.exp(-lam)) / (1 - np.exp(-lam))))
+#calculate cheb Value for argument x
+def Cheb(n, x):
     if n == 0:
-        Tn = 1
+        Tn = 1.0
         cheb_val = Tn
     else :
         Tn = Chebyshev.basis(n)
         cheb_val = 0.5 - (0.5 * Tn(x))
     return cheb_val
 
-def ChebPow(n, r, lam, rcut):
+def ChebExpCos(coeffs, r, rcut, rcut_in, dcut_in, lam):
+    gr = []
+
+    #set argument
+    x =  1 - (2 * ((np.exp(-lam * (r / rcut)) - np.exp(-lam)) / (1 - np.exp(-lam))))
+    for n, c in enumerate(coeffs):
+        gr.append(c[1]*Cheb(n, x))
+
+    return gr
+
+def ChebPow(coeffs, r, lam, rcut):
+    gr = []
 
     x = 2 * (1 - (1 - r/rcut)**lam) - 1
-    if n == 0:
-        Tn = 1
-        cheb_val = Tn
-    else :
-        Tn = Chebyshev.basis(n)
-        cheb_val = 0.5 - (0.5 * Tn(x))
-    return cheb_val
+    for n, c in enumerate(coeffs):
+        gr.append(c[1]*Cheb(n, x))
 
-def ChebLinear(n, r, lam, rcut):
+    return gr
+
+def ChebLinear(coeffs, r, lam, rcut):
+    gr = []
 
     x = (1 - r/rcut)
-    if n == 0:
-        Tn = 1
-        cheb_val = Tn
-    else :
-        Tn = Chebyshev.basis(n)
-        cheb_val = 0.5 - (0.5 * Tn(x))
-    return cheb_val
+    for n, c in enumerate(coeffs):
+        gr.append(c[1]*Cheb(n, x))
+
+    return gr
