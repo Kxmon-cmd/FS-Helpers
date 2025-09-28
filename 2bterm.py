@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import argparse
 from bin.cutoff import inner, cutoff, env
-from bin.basis import ChebExpCos, ChebPow, ChebLinear
+from bin.basis import ChebExpCos, ChebPow, ChebLinear, SBessel
 
 #Todo: add other basis functions
 
@@ -18,6 +18,8 @@ def V_r(r, rcut, dcut, coeffs, rcut_in, dcut_in, lam, base):
         gr = ChebPow(coeffs, r, rcut, rcut_in, dcut_in, lam)
     if base[2] == True:
         gr = ChebLinear(coeffs, r, lam, rcut)
+    if base[3] == True:
+        gr = SBessel(coeffs, rcut, r)
     
 
     #calculates the potential function with the coeffs and the basis functions. A Cutoff is also applied
@@ -78,14 +80,17 @@ def main():
             CEC_match = re.search(r'\s*radbasename: ChebExpCos', line)
             CP_match = re.search(r'\s*radbasename: ChebPow', line)
             CL_match = re.search(r'\s*radbasename: ChebLinear', line)
+            SB_match = re.search(r'\s*radbasename: SBessel', line)
             
-            base = [False, False, False] #[CEC, CP, CL]
+            base = [False, False, False, False] #[CEC, CP, CL, SB]
             if CEC_match:
                 base[0] = True
             if CP_match:
                 base[1] = True
             if CL_match:
                 base[2] = True
+            if SB_match:
+                base[3] = True
     
     #plotting potential
     r_vals = np.linspace(0 , rcut, 3000)
