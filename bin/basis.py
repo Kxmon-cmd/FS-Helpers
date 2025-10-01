@@ -1,8 +1,6 @@
 import numpy as np
 from numpy.polynomial.chebyshev import Chebyshev
 
-#todo: add support for SBessel
-
 #calculate cheb Value for argument x
 def Cheb(n, x):
     if n == 0:
@@ -15,7 +13,6 @@ def Cheb(n, x):
 
 def ChebExpCos(coeffs, r, rcut, rcut_in, dcut_in, lam):
     gr = []
-
     #set argument
     x =  1 - (2 * ((np.exp(-lam * (r / rcut)) - np.exp(-lam)) / (1 - np.exp(-lam))))
     for z, c in enumerate(coeffs):
