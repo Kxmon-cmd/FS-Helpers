@@ -25,3 +25,8 @@ The tools focus on converting MD outputs into FitSNAP-compatible formats and vis
 
       python 2bterm.py -i ACE_pot.yace
 
+## Parameters
+
+To use the "2bterm.py" on systems with multiple bonds, the parameter "a" can be used to change the bond which is being plotted. Note that the code currently only supports systems of up to two species.
+Some example potentials can be accessed in the examples folder. (AlN Yang, G., Liu, Y.-B., Yang, L., & Cao, B.-Y. (2024). Machine-learned atomic cluster expansion potentials for fast and quantum-accurate thermal simulations of wurtzite AlN. Journal of Applied Physics, 135, 085105. https://doi.org/10.1063/5.0188905)
+

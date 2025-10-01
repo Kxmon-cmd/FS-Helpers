@@ -36,24 +36,39 @@ def ChebLinear(coeffs, r, lam, rcut):
         gr.append(c[1]*Cheb(c[0], x))
     return gr
 
+def sinc(x):
+    #define sinc function
+    return np.sin(x) / x
+
 def fn(n, r, rcut):
-    return (-1)**n * np.sqrt(2) * np.pi / rcut**1.5  * (n + 2) / np.sqrt(np.sqrt(n + 1) + np.sqrt(n +2)) * (np.sinc(r * (n + 1) * np.pi / rcut) + np.sinc(r * (n + 2) * np.pi / rcut))
+    #auxilliary function for SBessel
+    return ((-1)**n * np.sqrt(2) * np.pi / rcut**1.5 *
+            (n + 1) * (n + 2) / np.sqrt((n + 1)**2 + (n + 2)**2) *
+            (sinc(r * (n + 1) / rcut) + sinc(r * (n + 2) / rcut)))
+
 
 def SBessel(coeffs, rcut, r):
+    """
+    Simplified Bessel Basis (nur gr, gewichtet mit coeffs).
+    coeffs: Liste von [n, faktor]
+    """
     gr = []
 
-    if r > rcut:
+    if r < rcut and r > 0:
         gr.append(fn(0, r, rcut))
 
-        for z, c in enumerate(coeffs):
-            if z > 0:
-                en = np.sqrt(c[0]) * np.sqrt(c[0] + 2) / (4 * (c[0] + 1)**4 +1)
-                dn = 1 - en
+        d_prev = 1.0
+        for i in range(1, len(coeffs)):
+            n, f = coeffs[i]
+            en = n**2 * (n + 2)**2 / (4 * (n + 1)**4 + 1)
+            dn = 1 - en / d_prev
 
-                x = 1/ np.sqrt(dn) * (fn(r, rcut, c[0]) + np.sqrt(en) * gr[c[0] - 1])
-                gr.append()
+            val = 1/np.sqrt(dn) * (fn(n, r, rcut) + np.sqrt(en/d_prev) * gr[i-1])  
 
-    else:
-        gr.append(0)
-    
+            gr.append(val)
+            d_prev = dn
+
+    for m in range(len(gr)):
+        gr[m] = gr[m] * coeffs[m][1]
+
     return gr
